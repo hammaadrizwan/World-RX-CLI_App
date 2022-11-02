@@ -1,0 +1,3 @@
+NAME             AGE         Team                Car     Points
+Max Verstappen 	 26 		 Redbull Racing 	 Rb18 	 199
+
