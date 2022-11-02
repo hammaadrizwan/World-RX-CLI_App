@@ -1,3 +1,6 @@
 NAME             AGE         Team                Car     Points
-Max Verstappen 	 26 		 Redbull Racing 	 Rb18 	 199
-
+George Russel 	 43 		 Mercedes Petronas 	 Gr66 	 199
+Charles Leclerc 	 54 		 Aston Martin 	 Am56 	 133
+Lewis Hamilton 	 36 		 Mercedes Petronas 	 W13 	 212
+Fernando Alonso 	 19 		 Btw Alpine 	 Fa12 	 100
+Carlos Sainz 	 25 		 Scuderria Ferrari 	 Cs34 	 284
