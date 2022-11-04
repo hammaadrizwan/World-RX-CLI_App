@@ -1,6 +1,7 @@
 def Menu_Screen():
     # MENU SCREEN - Displayed when System Launches
     print("")
+    print("")
     print("Type ADD for adding driver details")
     print("Type DDD for deleting")
     print("Type UDD for updating driver details")
@@ -23,7 +24,7 @@ def Menu_Screen():
     elif selected_option == "UDD":
         UDD_Function()
     elif selected_option == "VCT":
-        print("VCT Works")
+        VCT_Function()
     elif selected_option == "SRR":
         print("SRR Works")
     elif selected_option == "VRL":
@@ -150,6 +151,25 @@ def UDD_Function():
     with open("championship_data.txt","w") as file : # rewrites the file (after updating the record)
             for line in lines:
                 file.write(line)
+def VCT_Function():
+    with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
+        lines = file.readlines()
+
+    for outer_loop in range(1, len(lines) - 1): #outer loop to make sure every element is being considered
+        for records in range(1, len(lines) - 1): #takes all the elements in the list except the Header.
+            current_player_points = int(lines[records].strip().split()[6]) #gets the current players points
+            next_player_points = int(lines[records+1].strip().split()[6]) #gets the next players points
+            if current_player_points < next_player_points:
+                temp = lines[records]  # using Bubble sort idea to display points table in descending order
+                lines[records] = lines[records + 1]
+                lines[records + 1] = temp
+    #Formatting for the CHAMPIONSHIP STANDINGS
+    print("")
+    print("\t\t\t\t\t CHAMPIONSHIP STANDINGS \t\t\t\t")
+    print("")
+
+    for line in lines: #Ouput line by line..
+        print(line)
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 # Creates Two text files if it doesn't exist
