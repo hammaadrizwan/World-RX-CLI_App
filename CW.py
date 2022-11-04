@@ -180,7 +180,7 @@ exit_response = False # Checks whether user wants to Exit the program
 while exit_response != True:
     response = Menu_Screen() # Initializing the program
     if response == "ESC":
-        exit_response =True
+        exit_response = True
 
 
 
