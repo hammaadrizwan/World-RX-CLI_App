@@ -26,7 +26,7 @@ def Menu_Screen():
     elif selected_option == "VCT":
         VCT_Function()
     elif selected_option == "SRR":
-        print("SRR Works")
+        SRR_Function()
     elif selected_option == "VRL":
         print("VRL Works")
     elif selected_option == "STF":
@@ -41,8 +41,9 @@ def Menu_Screen():
 
     return selected_option
 def ADD_Function():
-    global record_exsisting
+    #global record_exsisting
     print("ADD Function..")
+    print("")
     while True:
         try:
             new_player_name = input("Enter Name: ").title()
@@ -90,6 +91,8 @@ def ADD_Function():
         championship_data_file.close()
         break
 def DDD_Function():
+    print("Delete Function")
+    print("")
     name_to_be_deleted = input("Enter the Name To be deleted: ").title()
     delete_name = name_to_be_deleted.strip().split()
     delete_firstname = delete_name[0]
@@ -106,7 +109,7 @@ def DDD_Function():
                 if "y" == user_confirmation: # gets user Confirmation before deleting
                     del(lines[records]) #deletes entire record
                     print("")
-                    print("{} data has been deleted..".format(name_to_be_deleted))
+                    print("{}'s data has been deleted..".format(name_to_be_deleted))
                     print("")
                     break
                 elif "n" == user_confirmation: #Exits the function if user doesnt want to delete.
@@ -119,6 +122,7 @@ def DDD_Function():
                 file.write(line)
 def UDD_Function():
     print("Update Driver Details...")
+    print("")
     driver_to_be_updated = input("Enter the Drivers Name for which details needs to be updated: ").title()
     driver_name = driver_to_be_updated.strip().split()
     driver_firstname = driver_name[0]
@@ -152,6 +156,8 @@ def UDD_Function():
             for line in lines:
                 file.write(line)
 def VCT_Function():
+    print("Display Championship Standings..")
+    print("")
     with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
 
@@ -170,8 +176,28 @@ def VCT_Function():
 
     for line in lines: #Ouput line by line..
         print(line)
+def SRR_Function():
+    race_data_file = open("race_data.txt", "r+")  # opens file for read and write at the same time
+    line_in_race_data = race_data_file.readline()
+    if line_in_race_data == "":
+        header_race_data = "DATE \t\t LOCATION \t\t DRIVER \t\t POSITION \t POINTS\n"
+        race_data_file.write(header_race_data)
+        race_data_file.close()
+
+    race_locations= ["Nyirad","Holjes","Montalegre","Barcelona","Riga","Norway"]#CHARACTER ENCODING... ACII cant handle!
+    random_location= random.randint(0,len(race_locations))
+    location = race_locations[random_location]
+    date = datetime.datetime.now()
+    date=date.strftime("%D")
+    race_data_file.write("{} \t\t {} \t\t {} \t\t\t {} \t\t {}\n".format(date,location,"TEST",1,10))
+    race_data_file.close()
+
+
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
+import random
+import datetime
+
 # Creates Two text files if it doesn't exist
 race_data_file = open("race_data.txt", "a")
 championship_data_file = open("championship_data.txt", "a")

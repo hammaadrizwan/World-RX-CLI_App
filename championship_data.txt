@@ -5,3 +5,5 @@ Lewis Hamilton 	 36 		 Mercedes Petronas 	 W13 	 212
 Fernando Alonso 	 19 		 Btw Alpine 	 Fa12 	 100
 Carlos Sainz 	 25 		 Scuderria Ferrari 	 Cs34 	 284
 Sergio Perez 	 32 		 Redbull Racing 	 Rb18 	 187
+Sebestian Vettel 	 33 		 Aston Marin 	 Sv34 	 89
+Lando Norris 	 28 		 Alpha Tauri 	 At56 	 172
