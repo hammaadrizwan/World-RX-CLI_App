@@ -142,7 +142,7 @@ def UDD_Function():
                 updated_player_team = input("Enter Team: ").title()
                 updated_player_car = input("Enter Car: ").title()
                 updated_player_current_points = int(input("Enter Current Points: "))
-                updated_records = "{} \t {} \t\t {} \t {} \t {}\n".format(updated_player_name, updated_player_age, updated_player_team,updated_player_car, updated_player_current_points)
+                updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name, updated_player_age, updated_player_team,updated_player_car, updated_player_current_points)
                 lines[records] = updated_records # Values are updated
                 update_successful=True
                 print("")
