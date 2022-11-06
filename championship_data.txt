@@ -1,9 +1,4 @@
-NAME             AGE         Team                Car     Points
-George Russel 	 43 		 Mercedes Petronas 	 Gr66 	 199
-Charles Leclerc 	 54 		 Aston Martin 	 Am56 	 133
-Lewis Hamilton 	 36 		 Mercedes Petronas 	 W13 	 212
-Fernando Alonso 	 19 		 Btw Alpine 	 Fa12 	 100
-Carlos Sainz 	 25 		 Scuderria Ferrari 	 Cs34 	 284
-Sergio Perez 	 32 		 Redbull Racing 	 Rb18 	 187
-Sebestian Vettel 	 33 		 Aston Marin 	 Sv34 	 89
-Lando Norris 	 28 		 Alpha Tauri 	 At56 	 172
+NAME                   AGE          TEAM                   CAR                POINTS      
+Lewis Hamilton         34           Mercedes Petronas      W18                200         
+Yuki Tsunoda           22           Alpha Tauri Scuderria  Yt67               99
+George Russel          22           Mercedes Petronas      Gr34               178         

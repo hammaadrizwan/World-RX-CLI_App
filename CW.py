@@ -63,7 +63,7 @@ def ADD_Function():
             continue
         # IF Empty Document Headers are being assigned
         if line_in_championship_data == "":
-            header_championship_data = "NAME \t\t\t AGE \t\t Team \t\t\t\t Car \t Points\n"
+            header_championship_data = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format("NAME","AGE","TEAM","CAR","POINTS")
             championship_data_file.write(header_championship_data)
             championship_data_file.close()
 
@@ -85,7 +85,7 @@ def ADD_Function():
             line_in_championship_data = championship_data_file.readline() #Continues till then EOF
 
         if record_exsisting == False: # Skips the first line of the document-Header
-            new_records = "{} \t {} \t\t {} \t {} \t {}\n".format(new_player_name, new_player_age, new_player_team, new_player_car,new_player_current_points)
+            new_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(new_player_name, new_player_age, new_player_team, new_player_car,new_player_current_points)
             championship_data_file.write(new_records)#Once validated new record is entered in to the Championship table
             print("{}  has been added..".format(new_player_name))
         championship_data_file.close()
@@ -161,8 +161,8 @@ def VCT_Function():
     with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
 
-    for outer_loop in range(1, len(lines) - 1): #outer loop to make sure every element is being considered
-        for records in range(1, len(lines) - 1): #takes all the elements in the list except the Header.
+    for outer_loop in range(1, len(lines)): #outer loop to make sure every element is being considered
+        for records in range(1, len(lines)): #takes all the elements in the list except the Header.
             current_player_points = int(lines[records].strip().split()[6]) #gets the current players points
             next_player_points = int(lines[records+1].strip().split()[6]) #gets the next players points
             if current_player_points < next_player_points:
@@ -180,16 +180,22 @@ def SRR_Function():
     race_data_file = open("race_data.txt", "r+")  # opens file for read and write at the same time
     line_in_race_data = race_data_file.readline()
     if line_in_race_data == "":
-        header_race_data = "DATE \t\t LOCATION \t\t DRIVER \t\t POSITION \t POINTS\n"
+        header_race_data = '{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format("DATE","LOCATION","DRIVER","POSITION","POINTS")
         race_data_file.write(header_race_data)
-        race_data_file.close()
+
 
     race_locations= ["Nyirad","Holjes","Montalegre","Barcelona","Riga","Norway"]#CHARACTER ENCODING... ACII cant handle!
-    random_location= random.randint(0,len(race_locations))
+    random_location= random.randint(0,len(race_locations)-1)
+    #Raceday
     location = race_locations[random_location]
     date = datetime.datetime.now()
     date=date.strftime("%D")
-    race_data_file.write("{} \t\t {} \t\t {} \t\t\t {} \t\t {}\n".format(date,location,"TEST",1,10))
+
+
+
+
+
+    race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(date,location,"Lewis Hamilton",1,10))
     race_data_file.close()
 
 
@@ -197,6 +203,7 @@ def SRR_Function():
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random
 import datetime
+
 
 # Creates Two text files if it doesn't exist
 race_data_file = open("race_data.txt", "a")
