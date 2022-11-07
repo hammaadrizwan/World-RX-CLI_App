@@ -99,13 +99,15 @@ def DDD_Function():
     delete_lastname = delete_name[1]
     with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
+        found = False
 
         for records in range(len(lines)):
             stored_data = lines[records].split()# takes records line by line
             stored_firstname = stored_data[0]
             stored_lastname = stored_data[1]
             if stored_firstname == delete_firstname and stored_lastname == delete_lastname:#compares stored names with user input name
-                user_confirmation = input("You are about to delete '{} {}' Records (Y/N):".format(delete_firstname,delete_lastname)).lower()
+                found=True
+                user_confirmation = input("You are about to delete '{} {}' Records (Y/N): ".format(delete_firstname,delete_lastname)).lower()
                 if "y" == user_confirmation: # gets user Confirmation before deleting
                     del(lines[records]) #deletes entire record
                     print("")
@@ -116,6 +118,9 @@ def DDD_Function():
                     break
                 else:
                     print("Enter (Y/N)") # for invalid responses
+        if found == False:
+            print("Driver not Found!")
+            print("Try Again...")
 
         with open("championship_data.txt","w") as file : # rewrites the rest of the file (after removing the record)
             for line in lines:
@@ -162,16 +167,16 @@ def VCT_Function():
         lines = file.readlines()
 
     for outer_loop in range(1, len(lines)): #outer loop to make sure every element is being considered
-        for records in range(1, len(lines)): #takes all the elements in the list except the Header.
-            current_player_points = int(lines[records].strip().split()[6]) #gets the current players points
-            next_player_points = int(lines[records+1].strip().split()[6]) #gets the next players points
+        for records in range(1, len(lines)-1): #takes all the elements in the list except the Header.
+            current_player_points = int(lines[records].strip().split()[-1]) #gets the current players points
+            next_player_points = int(lines[records+1].strip().split()[-1]) #gets the next players points
             if current_player_points < next_player_points:
                 temp = lines[records]  # using Bubble sort idea to display points table in descending order
                 lines[records] = lines[records + 1]
                 lines[records + 1] = temp
     #Formatting for the CHAMPIONSHIP STANDINGS
     print("")
-    print("\t\t\t\t\t CHAMPIONSHIP STANDINGS \t\t\t\t")
+    print("░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ CHAMPIONSHIP STANDINGS ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░")
     print("")
 
     for line in lines: #Ouput line by line..
@@ -183,7 +188,6 @@ def SRR_Function():
         header_race_data = '{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format("DATE","LOCATION","DRIVER","POSITION","POINTS")
         race_data_file.write(header_race_data)
 
-
     race_locations= ["Nyirad","Holjes","Montalegre","Barcelona","Riga","Norway"]#CHARACTER ENCODING... ACII cant handle!
     random_location= random.randint(0,len(race_locations)-1)
     #Raceday
@@ -191,12 +195,22 @@ def SRR_Function():
     date = datetime.datetime.now()
     date=date.strftime("%D")
 
+    driver_available = []
+    with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
+        lines = file.readlines()
+        for records in range(len(lines)):
+            stored_data = lines[records].split()# takes records line by line
+            stored_firstname = stored_data[0]
+            stored_lastname = stored_data[1]
+            driver = (stored_firstname+" "+stored_lastname)
+            driver_available.append(driver)
 
+    contestants = driver_available[1:] #removes the "name" and "age"
+    contestants_copy = contestants.copy() #copying the drivers list
+    random.shuffle(contestants_copy) #simulates positions randomly using - shuffle
 
-
-
-    race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(date,location,"Lewis Hamilton",1,10))
-    race_data_file.close()
+    #race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(date,location,"Lewis Hamilton",1,10))
+    #race_data_file.close()
 
 
 
