@@ -1,4 +1,6 @@
 NAME                   AGE          TEAM                   CAR                POINTS      
-Lewis Hamilton         34           Mercedes Petronas      W18                200         
-Yuki Tsunoda           22           Alpha Tauri Scuderria  Yt67               99
-George Russel          22           Mercedes Petronas      Gr34               178         
+Max Verstappen         24           Redbull Racing         Mv24               0
+Sergio Perez           32           Redbull Racing         Sp32               0
+Charles Leclerc        24           Scuderia Ferrari       Sf24               0
+George Russel          24           Mercedes Amg           W13                0
+Lewis Hamilton         37           Mercedes Amg           W13                0

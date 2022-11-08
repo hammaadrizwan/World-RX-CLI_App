@@ -132,7 +132,7 @@ def UDD_Function():
     driver_name = driver_to_be_updated.strip().split()
     driver_firstname = driver_name[0]
     driver_lastname = driver_name[1]
-
+    update_successful = False
     with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
         for records in range(len(lines)):
@@ -153,9 +153,7 @@ def UDD_Function():
                 print("")
                 print("{} data has been updated..".format(driver_to_be_updated))
                 print("")
-            else:
-                update_successful = False
-    if update_successful== False:
+    if update_successful == False:
         print("Driver not found..")
     with open("championship_data.txt","w") as file : # rewrites the file (after updating the record)
             for line in lines:
@@ -208,6 +206,46 @@ def SRR_Function():
     contestants = driver_available[1:] #removes the "name" and "age"
     contestants_copy = contestants.copy() #copying the drivers list
     random.shuffle(contestants_copy) #simulates positions randomly using - shuffle
+    #contestants copy - drivers positions from [0] which is First
+    global race_points
+    race_points = 0
+    drivers_position = 0
+    for position in range(len(contestants_copy)):
+        if position == 0: #FIRST PLACE
+            drivers_position = 1
+            race_points = 10
+            podium = True
+        elif position == 1: #SECOND PLACE
+            drivers_position = 2
+            race_points = 7
+            podium = True
+        elif position == 2:  #THIRD PLACE
+            drivers_position = 3
+            race_points = 5
+            podium = True
+        driver_name=contestants_copy[position].strip().split()
+        driver_firstname=driver_name[0]
+        driver_lastname=driver_name[1]
+        #updates
+        with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
+            lines = file.readlines()
+            for records in range(len(lines)):
+                stored_data = lines[records].split()  # takes records line by line
+                stored_firstname = stored_data[0]
+                stored_lastname = stored_data[1]
+                if stored_firstname == driver_firstname and stored_lastname == driver_lastname:
+                    updated_player_name = stored_firstname+" "+stored_lastname
+                    updated_player_age = stored_data[2]
+                    updated_player_team = stored_data[3]+" "+stored_data[4]
+                    updated_player_car = stored_data[5]
+                    if podium == False:
+                        race_points=0
+                    updated_player_current_points = int(stored_data[-1]) + race_points
+                    updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name,updated_player_age,updated_player_team,updated_player_car,updated_player_current_points)
+                    lines[records] = updated_records  # Values are updated
+        with open("championship_data.txt", "w") as file:  # rewrites the file (after updating the record)
+            for line in lines:
+                file.write(line)
 
     #race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(date,location,"Lewis Hamilton",1,10))
     #race_data_file.close()
