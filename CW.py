@@ -28,7 +28,7 @@ def Menu_Screen():
     elif selected_option == "SRR":
         SRR_Function()
     elif selected_option == "VRL":
-        print("VRL Works")
+        VRL_Function()
     elif selected_option == "STF":
         print("STF Works")
     elif selected_option == "RFF":
@@ -190,8 +190,13 @@ def SRR_Function():
     random_location= random.randint(0,len(race_locations)-1)
     #Raceday
     location = race_locations[random_location]
-    date = datetime.datetime.now()
-    race_date=date.strftime("%D")
+
+    month = random.randint(1, 12)
+    if month == 4 or month == 6 or month == 9 or month == 10:
+        day = random.randint(1, 30)
+    else:
+        day = random.randint(1, 31)
+    race_date = ("{}/{}/22".format(day, month))
 
     driver_available = []
     with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
@@ -248,6 +253,24 @@ def SRR_Function():
         #Wrtiting to race data file (as required)
         race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(race_date,location,updated_player_name,drivers_position,drivers_points))
     race_data_file.close()
+def VRL_Function():
+    print("Display Race Table ..")
+    print("")
+    with open("race_data.txt.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
+        lines = file.readlines()
+
+    for outer_loop in range(1, len(lines)):  # outer loop to make sure every element is being considered
+        for records in range(1, len(lines) - 1):  # takes all the elements in the list except the Header.
+            current_player_points = int(lines[records].strip().split()[-1])  # gets the current players points
+            next_player_points = int(lines[records + 1].strip().split()[-1])  # gets the next players points
+            if current_player_points < next_player_points:
+                temp = lines[records]  # using Bubble sort idea to display points table in descending order
+                lines[records] = lines[records + 1]
+                lines[records + 1] = temp
+    # Formatting for the CHAMPIONSHIP STANDINGS
+    print("")
+    print("░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ RACE TABLE ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░")
+    print("")
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random
