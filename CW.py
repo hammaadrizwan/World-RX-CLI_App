@@ -128,36 +128,46 @@ def DDD_Function():
 def UDD_Function():
     print("Update Driver Details...")
     print("")
-    driver_to_be_updated = input("Enter the Drivers Name for which details needs to be updated: ").title()
-    driver_name = driver_to_be_updated.strip().split()
-    driver_firstname = driver_name[0]
-    driver_lastname = driver_name[1]
-    update_successful = False
-    with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
-        lines = file.readlines()
-        for records in range(len(lines)):
-            stored_data = lines[records].split()# takes records line by line
-            stored_firstname = stored_data[0]
-            stored_lastname = stored_data[1]
-            if stored_firstname == driver_firstname and stored_lastname == driver_lastname:
-                print("Exsisting Record for '{}'".format(driver_to_be_updated))
-                print(lines[records])
-                updated_player_name = driver_to_be_updated
-                updated_player_age = int(input("Enter Age: "))
-                updated_player_team = input("Enter Team: ").title()
-                updated_player_car = input("Enter Car: ").title()
-                updated_player_current_points = int(input("Enter Current Points: "))
-                updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name, updated_player_age, updated_player_team,updated_player_car, updated_player_current_points)
-                lines[records] = updated_records # Values are updated
-                update_successful=True
-                print("")
-                print("{} data has been updated..".format(driver_to_be_updated))
-                print("")
-    if update_successful == False:
-        print("Driver not found..")
+    while True:
+        try:
+            driver_to_be_updated = input("Enter the Drivers Name for which details needs to be updated: ").title()
+            driver_name = driver_to_be_updated.strip().split()
+            driver_firstname = driver_name[0]
+            driver_lastname = driver_name[1]
+            update_successful = False
+            with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
+                lines = file.readlines()
+                for records in range(len(lines)):
+                    stored_data = lines[records].split()# takes records line by line
+                    stored_firstname = stored_data[0]
+                    stored_lastname = stored_data[1]
+                    if stored_firstname == driver_firstname and stored_lastname == driver_lastname:
+                        print("Exsisting Record for '{}'".format(driver_to_be_updated))
+                        print(lines[records])
+                        updated_player_name = driver_to_be_updated
+                        updated_player_age = int(input("Enter Age: "))
+                        updated_player_team = input("Enter Team: ").title()
+                        updated_player_car = input("Enter Car: ").title()
+                        updated_player_current_points = int(input("Enter Current Points: "))
+                        updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name, updated_player_age, updated_player_team,updated_player_car, updated_player_current_points)
+                        lines[records] = updated_records # Values are updated
+                        update_successful=True
+                        print("")
+                        print("{} data has been updated..".format(driver_to_be_updated))
+                        print("")
+            if update_successful == False:
+                print("Driver not found..")
+        except ValueError:
+            print("WARNING - Please enter a number")
+            print("")
+            continue
+        except FileNotFoundError:
+            print("WARNING - File not found")
+            print("")
+            continue
     with open("championship_data.txt","w") as file : # rewrites the file (after updating the record)
-            for line in lines:
-                file.write(line)
+        for line in lines:
+            file.write(line)
 def VCT_Function():
     print("Display Championship Standings..")
     print("")
@@ -186,19 +196,58 @@ def SRR_Function():
         header_race_data = '{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format("DATE","LOCATION","DRIVER","POSITION","POINTS")
         race_data_file.write(header_race_data)
 
-    race_locations= ["Nyirad","Holjes","Montalegre","Barcelona","Riga","Norway"]#CHARACTER ENCODING... ACII cant handle!
-    random_location= random.randint(0,len(race_locations)-1)
-    #Raceday
-    location = race_locations[random_location]
-
-    month = random.randint(1, 12)
-    if month == 4 or month == 6 or month == 9 or month == 10:
-        day = random.randint(1, 30)
-    else:
-        day = random.randint(1, 31)
-    race_date = ("{}/{}/22".format(day, month))
-
+    # function to generate random date
+    def Random_Race_location():
+        race_locations= ["Nyirad","Holjes","Montalegre","Barcelona","Riga","Norway"]#CHARACTER ENCODING... ACII cant handle!
+        random_location= random.randint(0,len(race_locations)-1)
+        #Raceday
+        location_random = race_locations[random_location]
+        return location_random
+    #function to generate random date
+    def Random_Race_date():
+        month = random.randint(1, 12)
+        if month == 4 or month == 6 or month == 9 or month == 10:
+            day = random.randint(1, 30)
+        else:
+            day = random.randint(1, 31)
+        race_date_random = ("{}/{}/22".format(day, month))
+        return race_date_random
+    race_location = Random_Race_location()
+    race_date = Random_Race_date()
     driver_available = []
+    exsisting_dates = []# used to store exsisting dates
+
+
+    #using a progressbar since the computer will take few seconds to read and write multiple data across two files immediately.
+    def progress_bar(percent, statement):
+        done_len = int(percent * progress_bar_length)
+        bar = "{} ".format(statement) # statement
+        bar += "|" #bar formatting
+        bar += "█" * done_len #the progress icon- to indicate the status completed
+        bar += "█"
+        bar += " " * (progress_bar_length - done_len)#removes whitespace when the progress bar increases
+        bar += "| "
+        bar += str(round(percent * 100)) #progress indicator - numerical form
+        bar += "%"
+        print("\r", end='') #prints all in one line
+        print(bar + (" " * 5), end='') #space between the bar and the text
+
+    progress_bar_length = 20
+    limit = 100
+
+    for status in range(1, limit + 1):
+        percent = status / limit
+        progress_bar(percent, "Initialising Race")
+        time.sleep(0.01)
+    print("Done")
+
+    for status in range(1, limit + 1):
+        percent = status / limit
+        progress_bar(percent , "Simulating Race  ")
+        time.sleep(0.1)
+    print("Done")
+    print("Simulation: COMPLETE ")
+
     with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
         for records in range(len(lines)):
@@ -250,10 +299,28 @@ def SRR_Function():
             for line in lines:
                 file.write(line)
 
+        #DUPLIACTE DATES - Validation
+        with open("race_data.txt", "r") as file:  # rewrites the file (after updating the record)
+            lines = file.readlines()
+            occurrence = 0
+            for records in range(1,len(lines)):
+                stored_date = lines[records].split()[0]#takes the stored date
+                occurrence = occurrence + 1 #records the number of times the date is being recorded for each contestants
+                if occurrence == len(contestants_copy): #to avoid repetition of same dates being stored, once the threshold amount
+                    # is met then the stored date is being appended to exsisting date array
+                    exsisting_dates.append(stored_date)
+                    occurrence =0# then limit is set to zero
+
+        date_exists = True
+        while date_exists == False:# checks if generated date is being already stored, if it is then new date is being generated
+            if race_date in exsisting_dates:
+                date_exists = True
+                race_date = Random_Race_date()
+
         #Wrtiting to race data file (as required)
-        race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(race_date,location,updated_player_name,drivers_position,drivers_points))
-    race_data_file.close()
-def VRL_Function():
+        race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(race_date,race_location,updated_player_name,drivers_position,drivers_points))
+    race_data_file.close() #closing the file again, for security purpose :)
+def VRL_Function(): #INCOMPLETE
     print("Display Race Table ..")
     print("")
     with open("race_data.txt.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
@@ -261,12 +328,14 @@ def VRL_Function():
 
     for outer_loop in range(1, len(lines)):  # outer loop to make sure every element is being considered
         for records in range(1, len(lines) - 1):  # takes all the elements in the list except the Header.
-            current_player_points = int(lines[records].strip().split()[-1])  # gets the current players points
-            next_player_points = int(lines[records + 1].strip().split()[-1])  # gets the next players points
-            if current_player_points < next_player_points:
-                temp = lines[records]  # using Bubble sort idea to display points table in descending order
-                lines[records] = lines[records + 1]
-                lines[records + 1] = temp
+            current_date = lines[records].strip().split()[0].split("/")[:2]
+            next_date = lines[records + 1].strip().split()[0].split("/")[:2]
+            if current_date[1] > next_date[1]:
+                if current_date[0] > next_date[0]:
+                    temp = lines[records]
+                    lines[records] = lines[records + 1]
+                    lines[records + 1] = temp
+
     # Formatting for the CHAMPIONSHIP STANDINGS
     print("")
     print("░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ RACE TABLE ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░")
@@ -274,7 +343,8 @@ def VRL_Function():
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random
-import datetime
+import time
+
 
 # Creates Two text files if it doesn't exist
 race_data_file = open("race_data.txt", "a")
@@ -285,6 +355,7 @@ while exit_response != True:
     response = Menu_Screen() # Initializing the program
     if response == "ESC":
         exit_response = True
+        break
 
 
 
