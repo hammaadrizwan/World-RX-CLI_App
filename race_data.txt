@@ -64,3 +64,13 @@ DATE         LOCATION     DRIVER                 POSITION           POINTS
 16/12/22     Holjes       Lewis Hamilton         3                  5           
 16/12/22     Holjes       Sergio Perez           4                  0           
 16/12/22     Holjes       Max Verstappen         5                  0           
+5/10/22      Barcelona    Max Verstappen         1                  10          
+5/10/22      Barcelona    Sergio Perez           2                  7           
+5/10/22      Barcelona    George Russel          3                  5           
+5/10/22      Barcelona    Charles Leclerc        4                  0           
+5/10/22      Barcelona    Lewis Hamilton         5                  0           
+29/2/22      Nyirad       Lewis Hamilton         1                  10          
+29/2/22      Nyirad       Max Verstappen         2                  7           
+29/2/22      Nyirad       Charles Leclerc        3                  5           
+29/2/22      Nyirad       Sergio Perez           4                  0           
+29/2/22      Nyirad       George Russel          5                  0           

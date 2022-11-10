@@ -169,7 +169,7 @@ def UDD_Function():
         for line in lines:
             file.write(line)
 def VCT_Function():
-    print("Display Championship Standings..")
+    print("Displaying Championship Standings..")
     print("")
     with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
@@ -320,19 +320,25 @@ def SRR_Function():
         #Wrtiting to race data file (as required)
         race_data_file.write('{:<12} {:<12} {:<22} {:<18} {:<12}\n'.format(race_date,race_location,updated_player_name,drivers_position,drivers_points))
     race_data_file.close() #closing the file again, for security purpose :)
-def VRL_Function(): #INCOMPLETE
-    print("Display Race Table ..")
+def VRL_Function():
+    print("Displaying Race Table ..")
     print("")
-    with open("race_data.txt.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
+    with open("race_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
         lines = file.readlines()
 
     for outer_loop in range(1, len(lines)):  # outer loop to make sure every element is being considered
         for records in range(1, len(lines) - 1):  # takes all the elements in the list except the Header.
-            current_date = lines[records].strip().split()[0].split("/")[:2]
-            next_date = lines[records + 1].strip().split()[0].split("/")[:2]
-            if current_date[1] > next_date[1]:
-                if current_date[0] > next_date[0]:
-                    temp = lines[records]
+            current_month = int(lines[records].split()[0].split("/")[1])  # gets the current month
+            next_month = int(lines[records + 1].split()[0].split("/")[1])  # gets the next month
+            current_day = int(lines[records].split()[0].split("/")[0])  # gets the current day
+            next_day = int(lines[records + 1].split()[0].split("/")[0]) # gets the next day
+            if current_month > next_month: #checks if current month is higher than next month
+                temp = lines[records]  # if true then next date records will be transfered to current date, using temporary varialble
+                lines[records] = lines[records + 1]
+                lines[records + 1] = temp
+            if current_month == next_month: #if the months are same and if the current day is greater than the next day then the same idea of swapping takes place here
+                if current_day > next_day:
+                    temp = lines[records]  # using Bubble sort idea to display points table in descending order
                     lines[records] = lines[records + 1]
                     lines[records + 1] = temp
 
@@ -340,6 +346,9 @@ def VRL_Function(): #INCOMPLETE
     print("")
     print("░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ RACE TABLE ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░")
     print("")
+
+    for line in lines: #Ouput line by line..
+        print(line)
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random
