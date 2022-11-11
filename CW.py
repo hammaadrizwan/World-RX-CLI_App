@@ -1,3 +1,17 @@
+def progress_bar(percent, statement):
+    progress_bar_length = 20
+    limit = 100
+    done_len = int(percent * progress_bar_length)
+    bar = "{} ".format(statement) # statement
+    bar += "|" #bar formatting
+    bar += "█" * done_len #the progress icon- to indicate the status completed
+    bar += "█"
+    bar += " " * (progress_bar_length - done_len)#removes whitespace when the progress bar increases
+    bar += "| "
+    bar += str(round(percent * 100)) #progress indicator - numerical form
+    bar += "%"
+    print("\r", end='') #prints all in one line
+    print(bar + (" " * 5), end='') #space between the bar and the text
 def Menu_Screen():
     # MENU SCREEN - Displayed when System Launches
     print("")
@@ -30,7 +44,7 @@ def Menu_Screen():
     elif selected_option == "VRL":
         VRL_Function()
     elif selected_option == "STF":
-        print("STF Works")
+        STF_Function()
     elif selected_option == "RFF":
         print("RFF")
     elif selected_option == "ESC":
@@ -219,32 +233,17 @@ def SRR_Function():
 
 
     #using a progressbar since the computer will take few seconds to read and write multiple data across two files immediately.
-    def progress_bar(percent, statement):
-        done_len = int(percent * progress_bar_length)
-        bar = "{} ".format(statement) # statement
-        bar += "|" #bar formatting
-        bar += "█" * done_len #the progress icon- to indicate the status completed
-        bar += "█"
-        bar += " " * (progress_bar_length - done_len)#removes whitespace when the progress bar increases
-        bar += "| "
-        bar += str(round(percent * 100)) #progress indicator - numerical form
-        bar += "%"
-        print("\r", end='') #prints all in one line
-        print(bar + (" " * 5), end='') #space between the bar and the text
 
-    progress_bar_length = 20
-    limit = 100
-
-    for status in range(1, limit + 1):
-        percent = status / limit
+    for status in range(1, 100 + 1):
+        percent = status / 100
         progress_bar(percent, "Initialising Race")
-        time.sleep(0.01)
+        time.sleep(0.005)
     print("Done")
 
-    for status in range(1, limit + 1):
-        percent = status / limit
+    for status in range(1, 100 + 1):
+        percent = status / 100
         progress_bar(percent , "Simulating Race  ")
-        time.sleep(0.1)
+        time.sleep(0.075)
     print("Done")
     print("Simulation: COMPLETE ")
 
@@ -349,15 +348,28 @@ def VRL_Function():
 
     for line in lines: #Ouput line by line..
         print(line)
+def STF_Function():
+    for status in range(1, 101):
+        percent = status / 100
+        progress_bar(percent, "SAVING FILES")
+        time.sleep(0.01)
+    print("DONE")
+    print('Race Data location:           "{}\{}" '.format(os.path.dirname(os.path.abspath(__file__)),race_data_filename))
+    print('Championship Data location:   "{}\{}" '.format(os.path.dirname(os.path.abspath(__file__)), championship_data_filename))
+    race_data_file.close()
+    championship_data_file.close()
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random
 import time
+import os
 
 
 # Creates Two text files if it doesn't exist
-race_data_file = open("race_data.txt", "a")
-championship_data_file = open("championship_data.txt", "a")
+race_data_filename = "race_data.txt"
+championship_data_filename = "championship_data.txt"
+race_data_file = open(race_data_filename, "a")
+championship_data_file = open(championship_data_filename, "a")
 
 exit_response = False # Checks whether user wants to Exit the program
 while exit_response != True:

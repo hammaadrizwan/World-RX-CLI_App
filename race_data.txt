@@ -74,3 +74,13 @@ DATE         LOCATION     DRIVER                 POSITION           POINTS
 29/2/22      Nyirad       Charles Leclerc        3                  5           
 29/2/22      Nyirad       Sergio Perez           4                  0           
 29/2/22      Nyirad       George Russel          5                  0           
+21/9/22      Barcelona    George Russel          1                  10          
+21/9/22      Barcelona    Sergio Perez           2                  7           
+21/9/22      Barcelona    Lewis Hamilton         3                  5           
+21/9/22      Barcelona    Max Verstappen         4                  0           
+21/9/22      Barcelona    Charles Leclerc        5                  0           
+20/6/22      Barcelona    Lewis Hamilton         1                  10          
+20/6/22      Barcelona    Sergio Perez           2                  7           
+20/6/22      Barcelona    Max Verstappen         3                  5           
+20/6/22      Barcelona    George Russel          4                  0           
+20/6/22      Barcelona    Charles Leclerc        5                  0           
