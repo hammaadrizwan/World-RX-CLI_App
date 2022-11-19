@@ -1,36 +1,22 @@
-def Progress_Bar(percent, statement):
-    progress_bar_length = 45
-    limit = 100
-    done_len = int(percent * progress_bar_length)
-    bar = "{} ".format(statement) # statement
-    bar += "|" #bar formatting
-    bar += "█" * done_len #the progress icon- to indicate the status completed
-    bar += "█"
-    bar += "░" * (progress_bar_length - done_len)#removes whitespace when the progress bar increases
-    bar += "| "
-    bar += str(round(percent * 100)) #progress indicator - numerical form
-    bar += "%"
-    print("\r", end='') #prints all in one line, '\r' returns back to the same line
-    print(bar + (" " * 5), end='') #space between the bar and the text
 def Menu_Screen():
     # MENU SCREEN - Displayed when System Launches
     print("")
     print("Type the code for the required function")
-    print("   {}      - Add driver details".format("\033[1m" + "ADD" + "\033[0m")) #("\033[1m" + string + "\033[0m") for bold letters in ansci encoding
-    print("   {}      - Delete driver details".format("\033[1m" + "DDD" + "\033[0m"))
-    print("   {}      - Updating a record".format("\033[1m" + "UDD" + "\033[0m"))
-    print("   {}      - Displays rally cross standings table".format("\033[1m" + "VCT" + "\033[0m"))
-    print("   {}      - Simulating a random race".format("\033[1m" + "SRR" + "\033[0m"))
-    print("   {}      - Displays race table".format("\033[1m" + "VRL" + "\033[0m"))
-    print("   {}      - Save data".format("\033[1m" + "STF" + "\033[0m"))
-    print("   {}      - Load data from the saved text file".format("\033[1m" + "RFF" + "\033[0m"))
-    print("   {}      - Exit Program".format("\033[1m" + "ESC" + "\033[0m"))
+    print("   {}      - Add driver details".format("ADD"))
+    print("   {}      - Delete driver details".format("DDD"))
+    print("   {}      - Updating a record".format("UDD"))
+    print("   {}      - Displays rally cross standings table".format("VCT"))
+    print("   {}      - Simulating a random race".format("SRR"))
+    print("   {}      - Displays race table".format("VRL"))
+    print("   {}      - Save data".format("STF"))
+    print("   {}      - Load data from the saved text file".format("RFF"))
+    print("   {}      - Exit Program".format("ESC"))
     print("")
-    print("   {}     - For more information".format("\033[1m" + "HLP" + "\033[0m"))
+    print("   {}     - For more information".format("HLP"))
+    print("")
     print("")
 
     selected_option = input("> Enter Code: ").upper().strip()[:3] #takes in the first 3 elements to consideration only
-    print("")
     # '.upper()' to minimise errors regarding CASE SENSITIVE
     # '.strip()' is used to remove WHITE SPACES in the input
 
@@ -55,43 +41,22 @@ def Menu_Screen():
         print("")
         VCT_Function()
     elif selected_option == "SRR":
-        for status in range(1, 100 + 1):
-            percent = status / 100
-            Progress_Bar(percent, "Initialising Race")
-            time.sleep(0.005)
-        print("Done")
-        for status in range(1, 100 + 1):
-            percent = status / 100
-            Progress_Bar(percent, "Simulating Race  ")
-            time.sleep(0.001)
-        print("Done")
-        print("Simulation: COMPLETE ")
         SRR_Function()
     elif selected_option == "VRL":
         print("Displaying Race Table..")
         VRL_Function()
     elif selected_option == "STF":
         STF_Function()
-        for status in range(1, 101):
-            percent = status / 100
-            Progress_Bar(percent, "Saving Files")
-            time.sleep(0.05)
-        print("COMPLETE")
         print("FILES SAVED")
     elif selected_option == "RFF":
         RFF_Function()
-        for status in range(1, 101):
-            percent = status / 100
-            Progress_Bar(percent, "Loading Files")
-            time.sleep(0.01)
-        print("COMPLETE")
-        print("SUCCESSFUL")
+        print("FILES LOADED")
     elif selected_option == "ESC":
         print("Exiting Program..")
-    elif selected_option =="HLP":
+    elif selected_option == "HLP":
         print("Choose a function from above, and type in the same format as the example given below")
         print("eg: type 'DDD' if you want to delete a driver from the system")
-    elif selected_option =="":
+    elif selected_option == "":
         print("Required Input!")
         print("Input cannot be blank, please try again.")
     else:
@@ -241,20 +206,7 @@ def UDD_Function():
                 print("(type 'all' if you want to update everything)")
                 update_option = input("> ").lower()#asks user whether they want to change one field or everything
 
-                if update_option =="name":
-                    while True:
-                        try:
-                            updated_player_name = input("Enter Name: ").title()
-                            if any((character.isdigit() for character in updated_player_name)) == True:
-                                raise TypeError("Name cannot contain numbers")
-                            break
-                        except TypeError:
-                            print("Name cannot contain numbers, Try Again")
-                        print("")
-                    updated_player_name_split=updated_player_name.split()
-                    stored_data[0]=updated_player_name_split[0]#splits the name into fname and lname(assumptions)
-                    stored_data[1] = updated_player_name_split[1]
-                elif update_option == "age":
+                if update_option == "age":
                     while True:
                         try:
                             updated_player_age = int(input("Enter Age: "))
@@ -282,14 +234,6 @@ def UDD_Function():
                 elif update_option=="all": # user can update all records of the driver if they need,
                     while True:
                         try:
-                            updated_player_name = input("Enter Name: ").title()
-                            if any((character.isdigit() for character in updated_player_name)) == True:
-                                raise TypeError("Name cannot contain numbers")
-                            break
-                        except TypeError:
-                            print("Name cannot contain numbers, Try Again")
-                    while True:
-                        try:
                             updated_player_age = int(input("Enter Age: "))
                             break
                         except ValueError:
@@ -302,10 +246,6 @@ def UDD_Function():
                             break
                         except ValueError:
                             print("Requires an Integer, Try Again")
-
-                    updated_player_name_split=updated_player_name.split()
-                    stored_data[0]=updated_player_name_split[0]# manually assigns each update to its location in the text
-                    stored_data[1] = updated_player_name_split[1]
                     stored_data[2] = updated_player_age
 
                     updated_player_team_split = updated_player_team.split()
@@ -316,7 +256,7 @@ def UDD_Function():
                 else:
                     print("Wrong input")
                     print("Choose the correct field. eg-'Team' if the details of driver's team should be updated..")
-                updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name, stored_data[2],(stored_data[3] +" "+stored_data[4]),stored_data[5],stored_data[6])
+                updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format( updated_player_name, stored_data[2],(stored_data[3] +" "+stored_data[4]),stored_data[5],stored_data[6])
                 #Left alings all the characters using .format({:<})
                 lines[records] = updated_records # Values are updated
                 update_successful=True
@@ -486,8 +426,6 @@ def VRL_Function():
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random #needed for simulating random race
-import time  #for progress bar, to limit traffic for program as many opertions take place at the same time, eg in SRR.
-
 
 # Creates Two text files if it doesn't exist
 race_data_filename = "race_data.txt"
