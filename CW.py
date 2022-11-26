@@ -1,39 +1,36 @@
 def Menu_Screen():
     # MENU SCREEN - Displayed when System Launches
     print("")
-    print("Type the code for the required function")
-    print("   {}      - Add driver details".format("ADD"))
-    print("   {}      - Delete driver details".format("DDD"))
-    print("   {}      - Updating a record".format("UDD"))
-    print("   {}      - Displays rally cross standings table".format("VCT"))
-    print("   {}      - Simulating a random race".format("SRR"))
-    print("   {}      - Displays race table".format("VRL"))
-    print("   {}      - Save data".format("STF"))
-    print("   {}      - Load data from the saved text file".format("RFF"))
-    print("   {}      - Exit Program".format("ESC"))
+    print("{}".format('\33[92m'+"Type the code for the required function"+'\33[0m'))
+    print("   {}      - Add driver details".format("\033[1m" + "ADD" + "\033[0m"))
+    print("   {}      - Delete driver details".format("\033[1m" + "DDD" + "\033[0m"))
+    print("   {}      - Updating a record".format("\033[1m" + "UDD" + "\033[0m"))
+    print("   {}      - Displays rally cross standings table".format("\033[1m" + "VCT" + "\033[0m"))
+    print("   {}      - Simulating a random race".format("\033[1m" + "SRR" + "\033[0m"))
+    print("   {}      - Displays race table".format("\033[1m" + "VRL" + "\033[0m"))
+    print("   {}      - Save data".format("\033[1m" + "STF" + "\033[0m"))
+    print("   {}      - Load data from the saved text file".format("\033[1m" + "RFF" + "\033[0m"))
+    print("   {}      - Exit Program".format("\033[1m" + "ESC" + "\033[0m"))
     print("")
-    print("   {}     - For more information".format("HLP"))
+    print("   {}      - For more information".format("\33[1m" + "HLP"  + '\33[0m'))
     print("")
     print("")
 
-    selected_option = input("> Enter Code: ").upper().strip()[:3] #takes in the first 3 elements to consideration only
+    selected_option = input("\033[96m"+"> Enter Code: "+"\033[0m").upper().strip()[:3] #takes in the first 3 elements to consideration only
     # '.upper()' to minimise errors regarding CASE SENSITIVE
     # '.strip()' is used to remove WHITE SPACES in the input
 
     if selected_option == "ADD": #Function calls
         print("")
-        print(" Driver Registration ")
-        print("---------------------")
+        print("\033[4m"+"\33[95m"+" DRIVER REGISTRATION "+"\33[0m")
         ADD_Function()
     elif selected_option == "DDD":
         print("")
-        print(" Delete Records ")
-        print("----------------")
+        print("\033[4m" + "\33[95m" + " DELETE RECORDS " + "\33[0m")
         DDD_Function()
     elif selected_option == "UDD":
         print("")
-        print(" Update Records ")
-        print("----------------")
+        print("\033[4m" + "\33[95m" + " UPDATE RECORDS " + "\33[0m")
         UDD_Function()
     elif selected_option == "VCT":
         print("")
@@ -52,7 +49,8 @@ def Menu_Screen():
         RFF_Function()
         print("FILES LOADED")
     elif selected_option == "ESC":
-        print("Exiting Program..")
+        print("\033[91m"+"Exiting Program.."+"\033[0m")
+        print("Complete")
     elif selected_option == "HLP":
         print("Choose a function from above, and type in the same format as the example given below")
         print("eg: type 'DDD' if you want to delete a driver from the system")
@@ -72,8 +70,11 @@ def RFF_Function():
     championship_data_filename = "championship_data.txt"
     race_data_file = open(race_data_filename, "r") #Loads data in to the variable to resume capabilities
     championship_data_file = open(championship_data_filename, "r")
+    lines_in_race_file = race_data_file.readlines()
+    lines_in_championship_file = championship_data_file.readlines()
+    return (lines_in_championship_file,lines_in_race_file)
 def ADD_Function():
-    RFF_Function() #loads data from the text file
+    lines_in_championship_file,lines_in_race_file = RFF_Function() #loads data from the text file
     while True: #using exception handling to minimise errors at syntax level.
         print("Enter Name:")
         try:
@@ -82,7 +83,7 @@ def ADD_Function():
                 raise TypeError("Name cannot contain numbers") #if so... raises TypeError
             break
         except TypeError:
-            print("Name cannot contain numbers, Try Again") # until the user inputs in the correct format, program will not move ahead.
+            print("\33[91m"+"Name cannot contain numbers, Try Again"+"\33[0m") # until the user inputs in the correct format, program will not move ahead.
         print("")
 
     while True: # repeats till user enters an integer
@@ -91,12 +92,10 @@ def ADD_Function():
             new_player_age = int(input("> "))
             break
         except ValueError:
-            print("Requires an Integer, Try Again")
-    print("")
+            print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m")
 
     print("Enter Team:")
     new_player_team = input("> ").title()
-    print("")
 
     print("Enter Car:")
     new_player_car = input("> ").title()
@@ -108,7 +107,7 @@ def ADD_Function():
             new_player_current_points = int(input(">  "))
             break
         except ValueError:
-            print("Requires an Integer, Try Again")
+            print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m") #outputs in RED
     print("")
 
     championship_data_file = open("championship_data.txt", "r+")   #opens file for read and write at the same time
@@ -118,7 +117,7 @@ def ADD_Function():
     if line_in_championship_data == "":
         header_championship_data = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format("NAME","AGE","TEAM","CAR","POINTS")
         championship_data_file.write(header_championship_data)
-        championship_data_file.close()
+        STF_Function()
 
     championship_data_file = open("championship_data.txt", "r+") #re - reads the file after Headers are being assigned
     line_in_championship_data = championship_data_file.readline()
@@ -133,147 +132,150 @@ def ADD_Function():
         if (new_player_first_name == stored_first_name) and (new_player_last_name == stored_last_name):#Checks for Duplication of records - assumes no driver CAN HAVE SAME NAMES!
             record_exsisting = True
             print("'{}' Exists already".format(new_player_name))
-            print("Invalid Input") #tells the user that records are being duplicated
+            print("\033[91m"+"Invalid Input"+"\033[0m") #tells the user that records are being duplicated
             break
         line_in_championship_data = championship_data_file.readline() #Continues till then EOF
 
     if record_exsisting == False: # Skips the first line of the document-Header
         new_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(new_player_name, new_player_age, new_player_team, new_player_car,new_player_current_points)
         championship_data_file.write(new_records)#Once validated new record is entered in to the Championship table
-        print("{}  has been added..".format(new_player_name))
+        print(("\33[32m"+" {}  has been added.."+"\33[0m").format(new_player_name))
     STF_Function()
 def DDD_Function():
-    RFF_Function()
+    lines_in_championship_file,lines_in_race_file = RFF_Function()
     print("Enter the Name To be deleted:")
     name_to_be_deleted = input("> ").title()
     delete_name = name_to_be_deleted.strip().split()
     delete_firstname = delete_name[0]
     delete_lastname = delete_name[1]
-    with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
-        lines = file.readlines()
-        found = False
 
-        for records in range(len(lines)):
-            stored_data = lines[records].split()# takes records line by line
-            stored_firstname = stored_data[0]
-            stored_lastname = stored_data[1]
-            if stored_firstname == delete_firstname and stored_lastname == delete_lastname:#compares stored names with user input name
-                found=True
-                user_confirmation = input("You are about to delete '{} {}' Records (Y/N): ".format(delete_firstname,delete_lastname)).lower()
-                if "y" == user_confirmation: # gets user Confirmation before deleting
-                    del(lines[records]) #deletes entire record
-                    print("")
-                    print("{}'s data has been deleted..".format(name_to_be_deleted))
-                    print("")
-                    break
-                elif "n" == user_confirmation: #Exits the function if user doesnt want to delete.
-                    break
-                else:
-                    print("Enter (Y/N)") # for invalid responses
-        if found == False:
-            print("Driver not Found!") #Tells the user if the deletion was a success or not,
+    lines = lines_in_championship_file
+    found = False
 
-        with open("championship_data.txt","w") as file : # rewrites the rest of the file (after removing the record)
-            for line in lines:
-                file.write(line)
+    for records in range(len(lines)):
+        stored_data = lines[records].split()# takes records line by line
+        stored_firstname = stored_data[0]
+        stored_lastname = stored_data[1]
+        if stored_firstname == delete_firstname and stored_lastname == delete_lastname:#compares stored names with user input name
+            found=True
+            user_confirmation = input("You are about to delete '{} {}' Records (Y/N): ".format(delete_firstname,delete_lastname)).lower()
+            if "y" == user_confirmation: # gets user Confirmation before deleting
+                del(lines[records]) #deletes entire record
+                print("")
+                print("{}'s data has been deleted..".format(name_to_be_deleted))
+                print("")
+                break
+            elif "n" == user_confirmation: #Exits the function if user doesnt want to delete.
+                break
+            else:
+                print("Enter (Y/N)") # for invalid responses
+    if found == False:
+        print("\033[93m"+"Driver not Found!"+"\33[0m") #Tells the user if the deletion was a success or not,
+
+    with open("championship_data.txt","w") as file : # rewrites the rest of the file (after removing the record)
+        for line in lines:
+            file.write(line)
     STF_Function()
 def UDD_Function():
-    RFF_Function()
-
+    lines_in_championship_file,lines_in_race_file = RFF_Function()
     print("Enter the Driver's Name for which details needs to be updated: ")
     driver_to_be_updated = input("> ").title()
     driver_name = driver_to_be_updated.strip().split()
     driver_firstname = driver_name[0]
     driver_lastname = driver_name[1]
     update_successful = False
-    with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
-        lines = file.readlines()
-        for records in range(len(lines)):
-            stored_data = lines[records].split()# takes records line by line
-            stored_firstname = stored_data[0]
-            stored_lastname = stored_data[1]
-            if stored_firstname == driver_firstname and stored_lastname == driver_lastname: #showing exsisitng records
-                print("Exsisting Record for '{}'".format(driver_to_be_updated))
-                print("Name ...........:  {}".format(driver_to_be_updated))
-                print("Age ............:  {}".format(stored_data[2]))
-                print("Team ...........:  {}".format(str(stored_data[3]+" "+stored_data[4])))
-                print("Car ............:  {}".format(stored_data[5]))
-                print("Current Points .:  {}".format(stored_data[-1]))
+
+    lines = lines_in_championship_file
+    for records in range(len(lines)):
+        stored_data = lines[records].split()# takes records line by line
+        stored_firstname = stored_data[0]
+        stored_lastname = stored_data[1]
+        if stored_firstname == driver_firstname and stored_lastname == driver_lastname: #showing exsisitng records
+            print("Exsisting Record for '{}'".format(driver_to_be_updated))
+            print("Name ...........:  {}".format(driver_to_be_updated))
+            print("Age ............:  {}".format(stored_data[2]))
+            print("Team ...........:  {}".format(str(stored_data[3]+" "+stored_data[4])))
+            print("Car ............:  {}".format(stored_data[5]))
+            print("Current Points .:  {}".format(stored_data[-1]))
+            print("")
+
+            updated_player_name = driver_to_be_updated
+            print("Which records do you need to update? ")
+            print("(type 'all' if you want to update everything)")
+            update_option = input("> ").lower()#asks user whether they want to change one field or everything
+
+            if update_option == "age":
+                while True:
+                    try:
+                        updated_player_age = int(input("Enter Age: "))
+                        break
+                    except ValueError:
+                        print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m")
                 print("")
+                stored_data[2] = updated_player_age
 
-                updated_player_name = driver_to_be_updated
-                print("Which records do you need to update? ")
-                print("(type 'all' if you want to update everything)")
-                update_option = input("> ").lower()#asks user whether they want to change one field or everything
+            elif update_option == "team":
+                updated_player_team = input("Enter Team: ").title()
+                updated_player_team_split = updated_player_team.split()
+                stored_data[3] = updated_player_team_split[0]
+                stored_data[4] = updated_player_team_split[1]
 
-                if update_option == "age":
-                    while True:
-                        try:
-                            updated_player_age = int(input("Enter Age: "))
-                            break
-                        except ValueError:
-                            print("Requires an Integer, Try Again")
-                    print("")
-                    stored_data[2] = updated_player_age
-                elif update_option == "team":
-                    updated_player_team = input("Enter Team: ").title()
-                    updated_player_team_split = updated_player_team.split()
-                    stored_data[3] = updated_player_team_split[0]
-                    stored_data[4] = updated_player_team_split[1]
-                elif update_option == "car":
-                    updated_player_car = input("Enter Car: ").title()
-                    stored_data[5] = updated_player_car
-                elif "points" in update_option.split() or "current" in update_option.split():# checks whether 'points' or 'current' is mentioned
-                    while True:
-                        try:
-                            updated_player_current_points = int(input("Enter Current Points: "))
-                            break
-                        except ValueError:
-                            print("Requires an Integer, Try Again")
-                    stored_data[-1] = updated_player_current_points
-                elif update_option=="all": # user can update all records of the driver if they need,
-                    while True:
-                        try:
-                            updated_player_age = int(input("Enter Age: "))
-                            break
-                        except ValueError:
-                            print("Requires an Integer, Try Again")
-                    updated_player_team = input("Enter Team: ").title()
-                    updated_player_car = input("Enter Car: ").title()
-                    while True:
-                        try:
-                            updated_player_current_points = int(input("Enter Current Points: "))
-                            break
-                        except ValueError:
-                            print("Requires an Integer, Try Again")
-                    stored_data[2] = updated_player_age
+            elif update_option == "car":
+                updated_player_car = input("Enter Car: ").title()
+                stored_data[5] = updated_player_car
 
-                    updated_player_team_split = updated_player_team.split()
-                    stored_data[3] = updated_player_team_split[0]
-                    stored_data[4] = updated_player_team_split[1]
-                    stored_data[5] = updated_player_car
-                    stored_data[-1] = updated_player_current_points
-                else:
-                    print("Wrong input")
-                    print("Choose the correct field. eg-'Team' if the details of driver's team should be updated..")
-                updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format( updated_player_name, stored_data[2],(stored_data[3] +" "+stored_data[4]),stored_data[5],stored_data[6])
-                #Left alings all the characters using .format({:<})
-                lines[records] = updated_records # Values are updated
-                update_successful=True
-                print("")
-                print("{}'s data has been updated..".format(driver_to_be_updated))
-                print("")# message is being shown after records are being updated successfully
+            elif "points" in update_option.split() or "current" in update_option.split():# checks whether 'points' or 'current' is mentioned
+                while True:
+                    try:
+                        updated_player_current_points = int(input("Enter Current Points: "))
+                        break
+                    except ValueError:
+                        print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m")
+                stored_data[-1] = updated_player_current_points
+
+            elif update_option=="all": # user can update all records of the driver if they need,
+                while True:
+                    try:
+                        updated_player_age = int(input("Enter Age: "))
+                        break
+                    except ValueError:
+                        print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m")
+                updated_player_team = input("Enter Team: ").title()
+                updated_player_car = input("Enter Car: ").title()
+                while True:
+                    try:
+                        updated_player_current_points = int(input("Enter Current Points: "))
+                        break
+                    except ValueError:
+                        print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m")
+                stored_data[2] = updated_player_age
+
+                updated_player_team_split = updated_player_team.split()
+                stored_data[3] = updated_player_team_split[0]
+                stored_data[4] = updated_player_team_split[1]
+                stored_data[5] = updated_player_car
+                stored_data[-1] = updated_player_current_points
+            else:
+                print("\33[91m"+"Wrong input"+"\33[0m")
+                print("Choose the correct field. eg-'Team' if the details of driver's team should be updated..")
+            updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format( updated_player_name, stored_data[2],(stored_data[3] +" "+stored_data[4]),stored_data[5],stored_data[6])
+            #Left aligns all the characters using .format({:<})
+            lines[records] = updated_records # Values are updated
+            update_successful=True
+            print("")
+            print(("\33[32m"+"{}'s data has been updated.."+"\33[32m").format(driver_to_be_updated))
+            print("")# message is being shown after records are being updated successfully
     if update_successful == False:
-        print("Driver not found..")
+        print("\33[91m"+"Driver not found.."+"\33[91m")
     with open("championship_data.txt","w") as file : # rewrites the file (after updating the record)
         for line in lines:
             file.write(line)#writes entire file again with updated fields
     STF_Function()
 def VCT_Function():
-    RFF_Function()
-    with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
-        lines = file.readlines()
+    lines_in_championship_file,lines_in_race_file = RFF_Function()
+    lines = lines_in_championship_file
 
+    #SORTING THE POINTS TABLE
     for outer_loop in range(1, len(lines)): #outer loop to make sure every element is being considered
         for records in range(1, len(lines)-1): #takes all the elements in the list except the Header.
             current_player_points = int(lines[records].strip().split()[-1]) #gets the current players points
@@ -296,7 +298,7 @@ def VCT_Function():
         rank += 1
 
 def SRR_Function():
-    RFF_Function()
+    lines_in_championship_file,lines_in_race_file = RFF_Function()
     race_data_file = open("race_data.txt", "r+")  # opens file for read and write at the same time
     line_in_race_data = race_data_file.readline()
     if line_in_race_data == "":
@@ -324,14 +326,13 @@ def SRR_Function():
     driver_available = [] #store names of drivers available to race
     exsisting_dates = []# used to store exsisting dates
 
-    with open("championship_data.txt") as file :  # Reads all the lines using with command .. reduce close and Open commands
-        lines = file.readlines()
-        for records in range(1,len(lines)): #removes the "name" and "age" starts from next element
-            stored_data = lines[records].split()# takes records line by line
-            stored_firstname = stored_data[0]
-            stored_lastname = stored_data[1]
-            driver = (stored_firstname+" "+stored_lastname) #connects both fname and lname, and adds them to the available drivers list
-            driver_available.append(driver)
+    lines = lines_in_championship_file
+    for records in range(1,len(lines)): #removes the "name" and "age" starts from next element
+        stored_data = lines[records].split()# takes records line by line
+        stored_firstname = stored_data[0]
+        stored_lastname = stored_data[1]
+        driver = (stored_firstname+" "+stored_lastname) #connects both fname and lname, and adds them to the available drivers list
+        driver_available.append(driver)
 
     contestants = driver_available
     contestants_copy = contestants.copy() #copying the drivers list
@@ -352,36 +353,35 @@ def SRR_Function():
         driver_name=contestants_copy[position].strip().split()
         driver_firstname=driver_name[0]
         driver_lastname=driver_name[1]
+        STF_Function()
         #updates
-        with open("championship_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
-            lines = file.readlines()
-            for records in range(len(lines)):
-                stored_data = lines[records].split()  # takes records line by line
-                stored_firstname = stored_data[0]
-                stored_lastname = stored_data[1]
-                if stored_firstname == driver_firstname and stored_lastname == driver_lastname:
-                    updated_player_name = stored_firstname+" "+stored_lastname
-                    updated_player_age = stored_data[2]
-                    updated_player_team = stored_data[3]+" "+stored_data[4]
-                    updated_player_car = stored_data[5]
-                    updated_player_current_points = int(stored_data[-1]) + race_points
-                    updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name,updated_player_age,updated_player_team,updated_player_car,updated_player_current_points)
-                    lines[records] = updated_records  # Values are updated
+        lines = lines_in_championship_file
+        for records in range(len(lines)):
+            stored_data = lines[records].split()  # takes records line by line
+            stored_firstname = stored_data[0]
+            stored_lastname = stored_data[1]
+            if stored_firstname == driver_firstname and stored_lastname == driver_lastname:
+                updated_player_name = stored_firstname+" "+stored_lastname
+                updated_player_age = stored_data[2]
+                updated_player_team = stored_data[3]+" "+stored_data[4]
+                updated_player_car = stored_data[5]
+                updated_player_current_points = int(stored_data[-1]) + race_points
+                updated_records = '{:<22} {:<12} {:<22} {:<18} {:<12}\n'.format(updated_player_name,updated_player_age,updated_player_team,updated_player_car,updated_player_current_points)
+                lines[records] = updated_records  # Values are updated
         with open("championship_data.txt", "w") as file:  # rewrites the file (after updating the record)
             for line in lines:
                 file.write(line)
 
         #DUPLIACTE DATES - Validation
-        with open("race_data.txt", "r") as file:  # rewrites the file (after updating the record)
-            lines = file.readlines()
-            occurrence = 0
-            for records in range(1,len(lines)):
-                stored_date = lines[records].split()[0]#takes the stored date
-                occurrence = occurrence + 1 #records the number of times the date is being recorded for each contestants
-                if occurrence == len(contestants_copy): #to avoid repetition of same dates being stored, once the threshold amount
-                    # is met then the stored date is being appended to exsisting date array
-                    exsisting_dates.append(stored_date)
-                    occurrence =0# then limit is set to zero
+        lines = lines_in_race_file
+        occurrence = 0
+        for records in range(1,len(lines)):
+            stored_date = lines[records].split()[0]#takes the stored date
+            occurrence = occurrence + 1 #records the number of times the date is being recorded for each contestants
+            if occurrence == len(contestants_copy): #to avoid repetition of same dates being stored, once the threshold amount
+                # is met then the stored date is being appended to exsisting date array
+                exsisting_dates.append(stored_date)
+                occurrence =0# then limit is set to zero
 
         date_exists = True
         while date_exists == False:# checks if generated date is being already stored
@@ -395,9 +395,9 @@ def SRR_Function():
 def VRL_Function():
     print("Race Table Loading..")
     print("")
-    RFF_Function()
-    with open("race_data.txt") as file:  # Reads all the lines using with command .. reduce close and Open commands
-        lines = file.readlines()
+    lines_in_championship_file,lines_in_race_file = RFF_Function()
+
+    lines = lines_in_race_file
 
     for outer_loop in range(1, len(lines)):  # outer loop to make sure every element is being considered
         for records in range(1, len(lines) - 1):  # takes all the elements in the list except the Header.
@@ -418,7 +418,7 @@ def VRL_Function():
 
     # Formatting for the CHAMPIONSHIP STANDINGS
     print("")
-    print("░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ RACE TABLE ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░")
+    print("░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ RACE TABLE ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░")
     print("")
 
     for line in lines: #Ouputs the sorted list line by line..
@@ -440,7 +440,3 @@ while exit_response != True:
     if response == "ESC":
         exit_response = True
         break #Program terminates
-
-
-
-
