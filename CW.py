@@ -99,7 +99,6 @@ def ADD_Function():
 
     print("Enter Car:")
     new_player_car = input("> ").title()
-    print("")
 
     while True:
         print("Enter Current Points:")
@@ -178,9 +177,15 @@ def DDD_Function():
     STF_Function()
 def UDD_Function():
     lines_in_championship_file,lines_in_race_file = RFF_Function()
-    print("Enter the Driver's Name for which details needs to be updated: ")
-    driver_to_be_updated = input("> ").title()
-    driver_name = driver_to_be_updated.strip().split()
+    while True:
+        print("Enter the Driver's Name for which details needs to be updated: ")
+        driver_to_be_updated = input("> ").title()
+        driver_name = driver_to_be_updated.strip().split()
+        if len(driver_name) != 2:
+            print("Enter a valid name..")
+
+        else:
+            break
     driver_firstname = driver_name[0]
     driver_lastname = driver_name[1]
     update_successful = False
@@ -266,7 +271,7 @@ def UDD_Function():
             print(("\33[32m"+"{}'s data has been updated.."+"\33[32m").format(driver_to_be_updated))
             print("")# message is being shown after records are being updated successfully
     if update_successful == False:
-        print("\33[91m"+"Driver not found.."+"\33[91m")
+        print("\33[91m"+"Driver not found.."+"\33[0m")
     with open("championship_data.txt","w") as file : # rewrites the file (after updating the record)
         for line in lines:
             file.write(line)#writes entire file again with updated fields

@@ -1,5 +1,6 @@
 NAME                   AGE          TEAM                   CAR                POINTS      
-Max Verstappen         24           Redbull Racing         Mv24               15          
-Sergio Perez           32           Redbull Racing         Sp32               22          
-Charles Leclerc        24           Scuderria Ferrari      Sf24               20          
-Lewis Hamilton         39           Mercedes Amg           W16                31          
+Max Verstappen         24           Redbull Racing         Mv24               110         
+Sergio Perez           32           Redbull Racing         Sp32               49          
+Charles Leclerc        24           Scuderria Ferrari      Sf24               50          
+Lewis Hamilton         39           Mercedes Amg           W16                50          
+George Russel          22           Mercedes Amg           W14                85          
