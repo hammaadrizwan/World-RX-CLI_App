@@ -49,8 +49,7 @@ def Menu_Screen():
         RFF_Function()
         print("FILES LOADED")
     elif selected_option == "ESC":
-        print("\033[91m"+"Exiting Program.."+"\033[0m")
-        print("Complete")
+        print("\033[91m"+"Program terminated."+"\033[0m")
     elif selected_option == "HLP":
         print("Choose a function from above, and type in the same format as the example given below")
         print("eg: type 'DDD' if you want to delete a driver from the system")
@@ -79,7 +78,10 @@ def ADD_Function():
         print("Enter Name:")
         try:
             new_player_name = input("> ").title()
-            if any((character.isdigit() for character in new_player_name)) == True: # checks whether any numbers are being entered into the name
+            if new_player_name == "":
+                print("\33[91m"+"Field cannot be empty!"+"\33[0m")
+                continue
+            elif any((character.isdigit() for character in new_player_name)) == True : # checks whether any numbers are being entered into the name
                 raise TypeError("Name cannot contain numbers") #if so... raises TypeError
             break
         except TypeError:
@@ -94,16 +96,29 @@ def ADD_Function():
         except ValueError:
             print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m")
 
-    print("Enter Team:")
-    new_player_team = input("> ").title()
-
-    print("Enter Car:")
-    new_player_car = input("> ").title()
+    while True:
+        print("Enter Team:")
+        new_player_team = input("> ").title()
+        if new_player_team != "":
+            break
+        else:
+            print("\33[91m" + "Field cannot be empty!" + "\33[0m")
 
     while True:
-        print("Enter Current Points:")
+        print("Enter Car:")
+        new_player_car = input("> ").title()
+        if new_player_car != "":
+            break
+        else:
+            print("\33[91m" + "Field cannot be empty!" + "\33[0m")
+
+    while True:
+
         try:
+            print("Enter Current Points:")
             new_player_current_points = int(input(">  "))
+            if new_player_current_points == "":
+                print("\33[91m" + "Field cannot be empty!" + "\33[0m")
             break
         except ValueError:
             print("\33[91m"+"Requires an Integer, Try Again"+"\33[0m") #outputs in RED
@@ -144,36 +159,46 @@ def DDD_Function():
     lines_in_championship_file,lines_in_race_file = RFF_Function()
     print("Enter the Name To be deleted:")
     name_to_be_deleted = input("> ").title()
+    while name_to_be_deleted == "":
+            print("\33[91m" + "Field cannot be empty!" + "\33[0m")
+            print("Enter the Name To be deleted:")
+            name_to_be_deleted = input("> ").title()
+
+
+
     delete_name = name_to_be_deleted.strip().split()
-    delete_firstname = delete_name[0]
-    delete_lastname = delete_name[1]
+    if len(delete_name)!= 2:
+        print("\033[91m"+"Driver not Found!"+"\33[0m")
+    else:
+        delete_firstname = delete_name[0]
+        delete_lastname = delete_name[1]
 
-    lines = lines_in_championship_file
-    found = False
+        lines = lines_in_championship_file
+        found = False
 
-    for records in range(len(lines)):
-        stored_data = lines[records].split()# takes records line by line
-        stored_firstname = stored_data[0]
-        stored_lastname = stored_data[1]
-        if stored_firstname == delete_firstname and stored_lastname == delete_lastname:#compares stored names with user input name
-            found=True
-            user_confirmation = input("You are about to delete '{} {}' Records (Y/N): ".format(delete_firstname,delete_lastname)).lower()
-            if "y" == user_confirmation: # gets user Confirmation before deleting
-                del(lines[records]) #deletes entire record
-                print("")
-                print("{}'s data has been deleted..".format(name_to_be_deleted))
-                print("")
-                break
-            elif "n" == user_confirmation: #Exits the function if user doesnt want to delete.
-                break
-            else:
-                print("Enter (Y/N)") # for invalid responses
-    if found == False:
-        print("\033[93m"+"Driver not Found!"+"\33[0m") #Tells the user if the deletion was a success or not,
+        for records in range(len(lines)):
+            stored_data = lines[records].split()# takes records line by line
+            stored_firstname = stored_data[0]
+            stored_lastname = stored_data[1]
+            if stored_firstname == delete_firstname and stored_lastname == delete_lastname:#compares stored names with user input name
+                found=True
+                user_confirmation = input("You are about to delete '{} {}' Records (Y/N): ".format(delete_firstname,delete_lastname)).lower()
+                if "y" == user_confirmation: # gets user Confirmation before deleting
+                    del(lines[records]) #deletes entire record
+                    print("")
+                    print("{}'s data has been deleted..".format(name_to_be_deleted))
+                    print("")
+                    break
+                elif "n" == user_confirmation: #Exits the function if user doesnt want to delete.
+                    break
+                else:
+                    print("Enter (Y/N)") # for invalid responses
+        if found == False:
+            print("\033[91m"+"Driver not Found!"+"\33[0m") #Tells the user if the deletion was a success or not,
 
-    with open("championship_data.txt","w") as file : # rewrites the rest of the file (after removing the record)
-        for line in lines:
-            file.write(line)
+        with open("championship_data.txt","w") as file : # rewrites the rest of the file (after removing the record)
+            for line in lines:
+                file.write(line)
     STF_Function()
 def UDD_Function():
     lines_in_championship_file,lines_in_race_file = RFF_Function()
