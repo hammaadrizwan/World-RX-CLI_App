@@ -320,12 +320,16 @@ def VCT_Function():
     print("░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ CHAMPIONSHIP STANDINGS ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░")#HEADER
     print("")
     rank = 0 #rank zero to start with, neglecting  the header in the championship standings
-    for line in lines: #Ouput line by line..
-        if rank == 0:
-            print("   "+line)# since first line in the lines array is the Header, there will be no rank assigned
-        else:
-            print(("{}. "+line).format(rank)) #ranks assigned according to the points gained
-        rank += 1
+    if len(lines)==0:
+        print("There are no drivers in the system...")
+        print("Use the ADD function to get started!")
+    else:
+        for line in lines: #Ouput line by line..
+            if rank == 0:
+                print("   "+line)# since first line in the lines array is the Header, there will be no rank assigned
+            else:
+                print(("{}. "+line).format(rank)) #ranks assigned according to the points gained
+            rank += 1
 
 def SRR_Function():
     lines_in_championship_file,lines_in_race_file = RFF_Function()
@@ -451,12 +455,19 @@ def VRL_Function():
     print("░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ RACE TABLE ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░")
     print("")
 
-    for line in lines: #Ouputs the sorted list line by line..
-        print(line)
+    if len(lines)==0:
+        print("No previous data to be displayed")
+        print(" ")
+        print("Inorder to view the race table..")
+        print("Use the SRR function to get started!")
+    else:
+        for line in lines:  # Ouputs the sorted list line by line..
+            print(line)
+
 
 """                                         MAIN PROGRAM STARTS FROM HERE                                           """
 import random #needed for simulating random race
-
+import time
 # Creates Two text files if it doesn't exist
 race_data_filename = "race_data.txt"
 championship_data_filename = "championship_data.txt"
@@ -470,3 +481,4 @@ while exit_response != True:
     if response == "ESC":
         exit_response = True
         break #Program terminates
+    time.sleep(2)
