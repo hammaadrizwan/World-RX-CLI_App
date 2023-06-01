@@ -1,5 +1,5 @@
 # World Rally cross championship management software
-
+###### [This is the First phase of my World RX Application, however it uses a CLI]
 A Command line interface driven system to manage the world rally cross championship.
 Main features:
 - ADD - add new contestants to the race
